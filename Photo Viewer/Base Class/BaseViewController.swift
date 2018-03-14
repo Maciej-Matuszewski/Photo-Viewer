@@ -8,7 +8,7 @@ class BaseViewController: UIViewController {
         configureProperties()
         configureLayout()
         configureReactiveBinding()
-        configureNavigationController()
+        configureNavigationItem()
     }
 
     private func baseConfiguration(){
@@ -16,18 +16,26 @@ class BaseViewController: UIViewController {
     }
 
     internal func configureProperties() {
+        #if DEBUG
         fatalError("`configureProperties()` has not been implemented in \(self)")
+        #endif
     }
 
     internal func configureLayout() {
+        #if DEBUG
         fatalError("`configureLayout()` has not been implemented in \(self)")
+        #endif
     }
 
     internal func configureReactiveBinding() {
+        #if DEBUG
         fatalError("`configureReactiveBinding()` has not been implemented in \(self)")
+        #endif
     }
 
-    internal func configureNavigationController() {
+    internal func configureNavigationItem() {
+        #if DEBUG
         fatalError("`configureNavigationController()` has not been implemented in \(self)")
+        #endif
     }
 }
