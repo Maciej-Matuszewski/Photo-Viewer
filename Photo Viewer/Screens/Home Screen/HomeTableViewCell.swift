@@ -66,7 +66,6 @@ class HomeTableViewCell: UITableViewCell {
             backgroundImageView.rightAnchor.constraint(equalTo: frontView.rightAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: frontView.bottomAnchor),
             backgroundImageView.heightAnchor.constraint(equalToConstant: 240)
-
         ])
 
         backgroundImageView.addSubview(titleLabel)

@@ -5,10 +5,11 @@ import Kingfisher
 
 class HomeViewController: BaseViewController {
 
-    fileprivate let viewModel = HomeViewModel()
-    fileprivate let disposeBag = DisposeBag()
+    private let viewModel = HomeViewModel()
+    private let disposeBag = DisposeBag()
 
-    fileprivate let tableView: UITableView = {
+    private let refreshControl = UIRefreshControl()
+    private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "cellIdentifier")
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -19,7 +20,9 @@ class HomeViewController: BaseViewController {
         return tableView
     }()
 
-    override func configureProperties() {}
+    override func configureProperties() {
+        tableView.refreshControl = refreshControl
+    }
 
     override func configureLayout() {
         view.addSubview(tableView)
@@ -33,7 +36,33 @@ class HomeViewController: BaseViewController {
     }
 
     override func configureReactiveBinding() {
+        viewModel.currentPhotosProvider
+            .asObservable()
+            .filter { !$0.isAuthorized }
+            .subscribe(onNext: { [weak self] provider in
+                guard let strongSelf = self else { return }
+                provider.authorize(parentController: strongSelf)
+            })
+            .disposed(by: disposeBag)
+
+        let refreshObserver = refreshControl.rx.controlEvent(.valueChanged).asObservable().map { return () }
+        let providerObserver = viewModel.currentPhotosProvider.asObservable().map { _ in return () }
+        //TO-DO: Change Notification.name
+        let authorizationObserver = NotificationCenter.default.rx.notification(Notification.Name(rawValue: "AuthorizationStateHasBeenChangedNotification")).asObservable().map { _ in return () }
+
+        Observable.of(refreshObserver, providerObserver, authorizationObserver)
+            .merge()
+            .flatMap { [unowned self] _ in return self.viewModel.currentPhotosProvider.asObservable() }
+            .filter { $0.isAuthorized }
+            .flatMap {$0.getPhotos(page: nil, searchPhrase: nil)}
+            .bind(to: viewModel.photos)
+            .disposed(by: disposeBag)
+
         viewModel.photos.asObservable()
+            .observeOn(MainScheduler.instance)
+            .do(onNext: { [weak self] _ in
+                self?.refreshControl.endRefreshing()
+            })
             .bind(to: tableView.rx.items(cellIdentifier: "cellIdentifier")) { index, model, cell in
                 guard let cell = cell as? HomeTableViewCell else { return }
                 cell.titleLabel.text = model.title
@@ -44,6 +73,11 @@ class HomeViewController: BaseViewController {
                     })
                 }
             }
+            .disposed(by: disposeBag)
+
+        viewModel.currentPhotosProvider.asObservable()
+            .map { $0.serviceName }
+            .bind(to: navigationItem.rx.title)
             .disposed(by: disposeBag)
     }
 
