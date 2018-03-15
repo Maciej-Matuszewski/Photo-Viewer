@@ -8,10 +8,9 @@ class BaseViewController: UIViewController {
         configureProperties()
         configureLayout()
         configureReactiveBinding()
-        configureNavigationItem()
     }
 
-    private func baseConfiguration(){
+    internal func baseConfiguration(){
         view.backgroundColor = .background
     }
 
@@ -30,12 +29,6 @@ class BaseViewController: UIViewController {
     internal func configureReactiveBinding() {
         #if DEBUG
         fatalError("`configureReactiveBinding()` has not been implemented in \(self)")
-        #endif
-    }
-
-    internal func configureNavigationItem() {
-        #if DEBUG
-        fatalError("`configureNavigationController()` has not been implemented in \(self)")
         #endif
     }
 }
