@@ -79,8 +79,14 @@ class HomeViewController: BaseViewController {
             .map { $0.serviceName }
             .bind(to: navigationItem.rx.title)
             .disposed(by: disposeBag)
+
+        tableView.rx.modelSelected(PhotoModel.self)
+            .asObservable()
+            .map { PhotoPreviewViewController(photoModel: $0) }
+            .subscribe(onNext: { [weak self] controller in
+                self?.present(controller, animated: true, completion: nil)
+            })
+            .disposed(by: disposeBag)
+
     }
-
-    override func configureNavigationItem() {}
-
 }

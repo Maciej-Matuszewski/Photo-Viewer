@@ -27,6 +27,7 @@
 		498EA23A2058475A00319F60 /* Photo_ViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EA2392058475A00319F60 /* Photo_ViewerTests.swift */; };
 		499797AA2058760D00BB259F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499797A92058760D00BB259F /* HomeViewModel.swift */; };
 		499797AC2058770100BB259F /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499797AB205876AD00BB259F /* PhotoModel.swift */; };
+		49F47101205AAFC3004FBF62 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F47100205AAFC3004FBF62 /* PhotoPreviewViewController.swift */; };
 		A3DAD97E665534397A72A973 /* Pods_Photo_Viewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE0FBFF00AE44293B8EAD331 /* Pods_Photo_Viewer.framework */; };
 		C4C9BD155FFDFEA2BFB33EB6 /* Pods_Photo_ViewerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF660E5C84685E013974FD4D /* Pods_Photo_ViewerTests.framework */; };
 /* End PBXBuildFile section */
@@ -69,6 +70,7 @@
 		498EA23B2058475A00319F60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		499797A92058760D00BB259F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		499797AB205876AD00BB259F /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
+		49F47100205AAFC3004FBF62 /* PhotoPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewController.swift; sourceTree = "<group>"; };
 		9BAEA64306382D3072F0D995 /* Pods-Photo Viewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Photo Viewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-Photo Viewer/Pods-Photo Viewer.release.xcconfig"; sourceTree = "<group>"; };
 		DE0FBFF00AE44293B8EAD331 /* Pods_Photo_Viewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Photo_Viewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF660E5C84685E013974FD4D /* Pods_Photo_ViewerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Photo_ViewerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				492D1E80205867E100E22DB8 /* Home Screen */,
+				49F47100205AAFC3004FBF62 /* PhotoPreviewViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				492D1E79205861FF00E22DB8 /* StyleController.swift in Sources */,
 				498603EE2059AC7400F48BA7 /* APIRequest.swift in Sources */,
 				492D1E882058740900E22DB8 /* HomeTableViewCell.swift in Sources */,
+				49F47101205AAFC3004FBF62 /* PhotoPreviewViewController.swift in Sources */,
 				498603ED2059AC7400F48BA7 /* APIClient.swift in Sources */,
 				499797AC2058770100BB259F /* PhotoModel.swift in Sources */,
 				492D1E7520585DF000E22DB8 /* UIColor+AppColors.swift in Sources */,
@@ -665,12 +669,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2FP33MYDL3;
+				DEVELOPMENT_TEAM = 6SZUYZ5FFC;
 				INFOPLIST_FILE = "$(SRCROOT)/Photo Viewer/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.matuszewski.Photo-Viewer";
+				PRODUCT_BUNDLE_IDENTIFIER = com.matuszewski.PhotoViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_TREAT_WARNINGS_AS_ERRORS = YES;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -683,12 +689,14 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2FP33MYDL3;
+				DEVELOPMENT_TEAM = 6SZUYZ5FFC;
 				INFOPLIST_FILE = "$(SRCROOT)/Photo Viewer/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.matuszewski.Photo-Viewer";
+				PRODUCT_BUNDLE_IDENTIFIER = com.matuszewski.PhotoViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
