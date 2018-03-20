@@ -3,7 +3,7 @@ import UIKit
 extension UIColor {
     
     /// Main color of application. Should be used as navigation elements and tints color.
-    static let main = UIColor(red:0.24, green:0.80, blue:0.58, alpha:1.00)
+    static let main = UIColor(red:0.38, green:0.28, blue:0.48, alpha:1.00)
     
     /// Color of background
     static let background = UIColor(red:0.93, green:0.93, blue:0.93, alpha:1.00)
