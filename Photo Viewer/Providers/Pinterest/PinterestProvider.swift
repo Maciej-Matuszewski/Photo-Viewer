@@ -61,6 +61,12 @@ extension PinterestProvider: PhotosProvider {
         return accessToken != nil
     }
 
+    var emptyStateInfoText: String {
+        get {
+            return "Ops... There is nothing here :(\n\nPlease go to Pinterest website or app to add some pins to your board.".localized
+        }
+    }
+
     func authorize(parentController: UIViewController) {
         guard var components = URLComponents(url: baseURL.appendingPathComponent("oauth"), resolvingAgainstBaseURL: false) else { return }
 

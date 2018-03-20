@@ -18,6 +18,8 @@
 		4934A1B320605B64008416D7 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4934A1B220605B1A008416D7 /* OnboardingViewController.swift */; };
 		4934A1B520605CEC008416D7 /* MessaageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4934A1B420605CEC008416D7 /* MessaageView.swift */; };
 		4934A1B72060677A008416D7 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4934A1B62060677A008416D7 /* OnboardingViewModel.swift */; };
+		4977A2032061A9F1007DFE3D /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2022061A9F1007DFE3D /* EmptyStateView.swift */; };
+		4977A2052061B160007DFE3D /* LoginStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2042061B160007DFE3D /* LoginStateView.swift */; };
 		498603EA2059A39700F48BA7 /* PhotosProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603E92059A39700F48BA7 /* PhotosProvider.swift */; };
 		498603ED2059AC7400F48BA7 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603EB2059AC7400F48BA7 /* APIClient.swift */; };
 		498603EE2059AC7400F48BA7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603EC2059AC7400F48BA7 /* APIRequest.swift */; };
@@ -61,6 +63,8 @@
 		4934A1B220605B1A008416D7 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		4934A1B420605CEC008416D7 /* MessaageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessaageView.swift; sourceTree = "<group>"; };
 		4934A1B62060677A008416D7 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		4977A2022061A9F1007DFE3D /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
+		4977A2042061B160007DFE3D /* LoginStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginStateView.swift; sourceTree = "<group>"; };
 		498603E92059A39700F48BA7 /* PhotosProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosProvider.swift; sourceTree = "<group>"; };
 		498603EB2059AC7400F48BA7 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		498603EC2059AC7400F48BA7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -198,6 +202,15 @@
 			path = "Home Screen";
 			sourceTree = "<group>";
 		};
+		4977A2062061B166007DFE3D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4977A2022061A9F1007DFE3D /* EmptyStateView.swift */,
+				4977A2042061B160007DFE3D /* LoginStateView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		498603F02059ACCD00F48BA7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +257,7 @@
 				492D1E6D20585DF000E22DB8 /* Extensions */,
 				492D1E7B205866AC00E22DB8 /* Base Class */,
 				492D1E6820585B4800E22DB8 /* Screens */,
+				4977A2062061B166007DFE3D /* Views */,
 				492D1E7D205866CB00E22DB8 /* Protocols */,
 				498603F02059ACCD00F48BA7 /* Network */,
 				492D1E7F205866DB00E22DB8 /* Providers */,
@@ -527,6 +541,7 @@
 			files = (
 				498EA2252058475A00319F60 /* AppDelegate.swift in Sources */,
 				4934A1B72060677A008416D7 /* OnboardingViewModel.swift in Sources */,
+				4977A2032061A9F1007DFE3D /* EmptyStateView.swift in Sources */,
 				498603EA2059A39700F48BA7 /* PhotosProvider.swift in Sources */,
 				492D1E7420585DF000E22DB8 /* UIFont+AppFonts.swift in Sources */,
 				4934A1B520605CEC008416D7 /* MessaageView.swift in Sources */,
@@ -544,6 +559,7 @@
 				498603ED2059AC7400F48BA7 /* APIClient.swift in Sources */,
 				499797AC2058770100BB259F /* PhotoModel.swift in Sources */,
 				492D1E7520585DF000E22DB8 /* UIColor+AppColors.swift in Sources */,
+				4977A2052061B160007DFE3D /* LoginStateView.swift in Sources */,
 				492D1E6C20585BA400E22DB8 /* BaseViewController.swift in Sources */,
 				498603F22059AD0100F48BA7 /* PinterestProvider.swift in Sources */,
 				49FFD317205B0E1500319E53 /* FlowController.swift in Sources */,

@@ -19,7 +19,7 @@ class FlowController {
         let authenticatedProviders = providers.filter { $0.isAuthorized }
         if !authenticatedProviders.isEmpty {
             navigationController.setNavigationBarHidden(false, animated: true)
-            navigationController.setViewControllers([HomeViewController(providers: providers)], animated: true)
+            navigationController.setViewControllers([HomeViewController(provider: authenticatedProviders.first!)], animated: true)
         } else {
             guard let firstProvider = providers.first else {
                 fatalError("App can not works without photo provider!")
