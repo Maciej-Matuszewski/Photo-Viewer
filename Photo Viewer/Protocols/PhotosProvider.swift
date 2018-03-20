@@ -11,9 +11,13 @@ protocol PhotosProvider {
 
     var emptyStateInfoText: String { get }
 
+    var hasMore: Bool { get }
+
     func authorize(parentController: UIViewController)
 
-    func getPhotos(page: Int?, searchPhrase: String?) -> Observable<[PhotoModel]>
+    func getPhotos(searchPhrase: String?) -> Observable<[PhotoModel]>
+
+    func getNextPage() -> Observable<[PhotoModel]>
 }
 
 extension PhotosProvider {
