@@ -5,7 +5,7 @@ import Kingfisher
 
 class HomeViewController: BaseViewController {
 
-    private let viewModel = HomeViewModel()
+    private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
 
     private let refreshControl = UIRefreshControl()
@@ -19,6 +19,16 @@ class HomeViewController: BaseViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+
+    init(providers: [PhotosProvider]) {
+        viewModel = HomeViewModel(providers: providers)
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    @available (*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func configureProperties() {
         tableView.refreshControl = refreshControl
@@ -36,14 +46,6 @@ class HomeViewController: BaseViewController {
     }
 
     override func configureReactiveBinding() {
-        viewModel.currentPhotosProvider
-            .asObservable()
-            .filter { !$0.isAuthorized }
-            .subscribe(onNext: { [weak self] provider in
-                guard let strongSelf = self else { return }
-                provider.authorize(parentController: strongSelf)
-            })
-            .disposed(by: disposeBag)
 
         let refreshObserver = refreshControl.rx.controlEvent(.valueChanged).asObservable().map { return () }
         let providerObserver = viewModel.currentPhotosProvider.asObservable().map { _ in return () }
