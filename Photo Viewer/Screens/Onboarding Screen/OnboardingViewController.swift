@@ -20,11 +20,19 @@ class OnboardingViewController: BaseViewController {
         return messageView
     }()
 
+    let indicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+        indicatorView.color = .main
+        indicatorView.translatesAutoresizingMaskIntoConstraints = false
+        indicatorView.hidesWhenStopped = true
+        return indicatorView
+    }()
+
     let button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .white
-        button.setTitleColor(.main, for: .normal)
+        button.backgroundColor = .main
+        button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 20
         button.titleLabel?.font = .button
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
@@ -60,6 +68,12 @@ class OnboardingViewController: BaseViewController {
         NSLayoutConstraint.activate([
             button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             button.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+        ])
+
+        view.addSubview(indicatorView)
+        NSLayoutConstraint.activate([
+            indicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            indicatorView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
         ])
 
         view.addSubview(scrollView)
@@ -121,22 +135,26 @@ class OnboardingViewController: BaseViewController {
                 case .wait:
                     self?.typingView.isHidden = false
                     self?.button.isHidden = true
+                    self?.indicatorView.stopAnimating()
                     return
                 case .waitForResponse:
                     self?.typingView.isHidden = true
                     self?.button.isHidden = true
+                    self?.indicatorView.startAnimating()
                     return
                 case .login:
                     self?.typingView.isHidden = true
                     guard let button = self?.button else { return }
-                    button.setTitle("Log in".localized, for: .normal)
+                    button.setTitle("Login".localized, for: .normal)
                     self?.button.isHidden = false
+                    self?.indicatorView.stopAnimating()
                     return
                 case .continue:
                     self?.typingView.isHidden = true
                     guard let button = self?.button else { return }
                     button.setTitle("Continue".localized, for: .normal)
                     self?.button.isHidden = false
+                    self?.indicatorView.stopAnimating()
                     return
                 }
             })

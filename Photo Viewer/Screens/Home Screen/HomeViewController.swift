@@ -20,8 +20,28 @@ class HomeViewController: BaseViewController {
         return tableView
     }()
 
-    init(providers: [PhotosProvider]) {
-        viewModel = HomeViewModel(providers: providers)
+    fileprivate var emptyStateView: UIView {
+        let viewSize = CGSize(
+            width: view.frame.width,
+            height: tableView.frame.height - (navigationController?.navigationBar.frame.height ?? 0) - (navigationController?.tabBarController?.tabBar.frame.height ?? 0) - 100
+        )
+        return viewModel.currentPhotosProvider.value.isAuthorized
+            ? EmptyStateView(
+                with: viewModel.currentPhotosProvider.value.emptyStateInfoText,
+                size: viewSize
+            )
+            : LoginStateView(
+                with: "Please login to display photos!".localized,
+                size: viewSize,
+                onButtonClick: { [weak self] in
+                    guard let strongSelf = self else { return }
+                    strongSelf.viewModel.currentPhotosProvider.value.authorize(parentController: strongSelf)
+                }
+            )
+    }
+
+    init(provider: PhotosProvider) {
+        viewModel = HomeViewModel(provider: provider)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -62,8 +82,9 @@ class HomeViewController: BaseViewController {
 
         viewModel.photos.asObservable()
             .observeOn(MainScheduler.instance)
-            .do(onNext: { [weak self] _ in
+            .do(onNext: { [weak self] photos in
                 self?.refreshControl.endRefreshing()
+                self?.tableView.tableHeaderView = photos.isEmpty ? self?.emptyStateView : nil
             })
             .bind(to: tableView.rx.items(cellIdentifier: "cellIdentifier")) { index, model, cell in
                 guard let cell = cell as? HomeTableViewCell else { return }
@@ -89,6 +110,5 @@ class HomeViewController: BaseViewController {
                 self?.present(controller, animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
-
     }
 }

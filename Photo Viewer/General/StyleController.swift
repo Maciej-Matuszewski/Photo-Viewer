@@ -2,7 +2,6 @@ import UIKit
 import KVNProgress
 
 class StyleController {
-
     private init(){}
 
     public static func initialize() {
