@@ -47,6 +47,7 @@ class PinterestProvider {
     }()
 
     fileprivate var cursor: String?
+    fileprivate var searchPhrase: String?
 }
 
 extension PinterestProvider: PhotosProvider {
@@ -95,10 +96,19 @@ extension PinterestProvider: PhotosProvider {
 
     func getPhotos(searchPhrase: String? = nil, cursor: String? = nil) -> Observable<[PhotoModel]> {
         guard let accessToken = accessToken else { return Observable.just([]) }
-        let response: Observable<PinterestResponseModel> = apiClient.send(apiRequest: PinterestPinsRequest(accessToken: accessToken, cursor: cursor))
+
+        let request: APIRequest
+        if let searchPhrase = searchPhrase {
+            request = PinterestSearchPinsRequest(accessToken: accessToken, query: searchPhrase, cursor: cursor)
+        } else {
+            request = PinterestPinsRequest(accessToken: accessToken, cursor: cursor)
+        }
+
+        let response: Observable<PinterestResponseModel> = apiClient.send(apiRequest: request)
         return response
             .do(onNext: { [weak self] response in
                 self?.cursor = response.page.cursor
+                self?.searchPhrase = searchPhrase
             })
             .map { $0.data }
             .map { pins -> [PhotoModel] in
@@ -114,6 +124,6 @@ extension PinterestProvider: PhotosProvider {
 
     func getNextPage() -> Observable<[PhotoModel]> {
         guard let cursor = cursor else { return Observable.just([]) }
-        return getPhotos(cursor: cursor)
+        return getPhotos(searchPhrase: searchPhrase, cursor: cursor)
     }
 }
