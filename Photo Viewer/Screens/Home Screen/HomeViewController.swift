@@ -9,6 +9,16 @@ class HomeViewController: BaseViewController {
     private let disposeBag = DisposeBag()
 
     private let refreshControl = UIRefreshControl()
+
+    private let searchController: UISearchController = {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "Search".localized
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.showsCancelButton = false
+        return searchController
+    }()
+
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "cellIdentifier")
@@ -31,7 +41,7 @@ class HomeViewController: BaseViewController {
     fileprivate var emptyStateView: UIView {
         let viewSize = CGSize(
             width: view.frame.width,
-            height: tableView.frame.height - (navigationController?.navigationBar.frame.height ?? 0) - (navigationController?.tabBarController?.tabBar.frame.height ?? 0) - 100
+            height: 300
         )
         return viewModel.currentPhotosProvider.value.isAuthorized
             ? EmptyStateView(
@@ -60,6 +70,7 @@ class HomeViewController: BaseViewController {
 
     override func configureProperties() {
         tableView.refreshControl = refreshControl
+        navigationItem.searchController = searchController
     }
 
     override func configureLayout() {
@@ -77,11 +88,13 @@ class HomeViewController: BaseViewController {
 
         let refreshObserver = refreshControl.rx.controlEvent(.valueChanged).asObservable().map { return () }
         let providerObserver = viewModel.currentPhotosProvider.asObservable().map { _ in return () }
+        let emptySearchObserver = searchController.searchBar.rx.text.filter { $0?.isEmpty ?? false }.map { _ in return () }
         //TO-DO: Change Notification.name
         let authorizationObserver = NotificationCenter.default.rx.notification(Notification.Name(rawValue: "AuthorizationStateHasBeenChangedNotification")).asObservable().map { _ in return () }
 
-        Observable.of(refreshObserver, providerObserver, authorizationObserver)
+        Observable.of(refreshObserver, providerObserver, authorizationObserver, emptySearchObserver)
             .merge()
+            .throttle(2, latest: true, scheduler: MainScheduler.instance)
             .flatMap { [unowned self] _ in return self.viewModel.currentPhotosProvider.asObservable() }
             .filter { $0.isAuthorized }
             .flatMap {$0.getPhotos(searchPhrase: nil)}
@@ -109,7 +122,6 @@ class HomeViewController: BaseViewController {
 
         tableView.rx.willDisplayCell
             .map { $0.indexPath }
-            .distinctUntilChanged()
             .filter { [unowned self] indexPath -> Bool in
                 return indexPath.row == self.viewModel.photos.value.count - 1 && self.viewModel.currentPhotosProvider.value.hasMore
             }
@@ -117,7 +129,6 @@ class HomeViewController: BaseViewController {
             .map { [unowned self] models -> [PhotoModel] in
                 var currentPhotos = self.viewModel.photos.value
                 currentPhotos.append(contentsOf: models)
-                print(currentPhotos.count)
                 return currentPhotos
             }
             .bind(to: viewModel.photos)
@@ -132,7 +143,40 @@ class HomeViewController: BaseViewController {
             .asObservable()
             .map { PhotoPreviewViewController(photoModel: $0) }
             .subscribe(onNext: { [weak self] controller in
-                self?.present(controller, animated: true, completion: nil)
+                if self?.searchController.isActive ?? false {
+                    self?.searchController.present(controller, animated: true, completion: nil)
+                } else {
+                    self?.present(controller, animated: true, completion: nil)
+                }
+            })
+            .disposed(by: disposeBag)
+
+        searchController.searchBar.rx.text.asObservable()
+            .map { ($0 ?? "").lowercased() }
+            .throttle(1.5, latest: true, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .filter { !$0.isEmpty }
+            .flatMap { [unowned self] searchPhrase in
+                return self.viewModel.currentPhotosProvider.value.getPhotos(searchPhrase: searchPhrase)
+            }
+            .bind(to: viewModel.photos)
+            .disposed(by: disposeBag)
+
+        Observable
+            .from([
+                NotificationCenter.default.rx.notification(NSNotification.Name.UIKeyboardWillShow)
+                    .map { notification -> CGFloat in
+                        (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.height ?? 0
+                    },
+                NotificationCenter.default.rx.notification(NSNotification.Name.UIKeyboardWillHide)
+                    .map { _ -> CGFloat in
+                        0
+                    }
+                ])
+            .merge()
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] keyboardHeight in
+                self?.tableView.contentInset.bottom = keyboardHeight != 0 ? keyboardHeight : self?.view.safeAreaInsets.bottom ?? 0
             })
             .disposed(by: disposeBag)
     }

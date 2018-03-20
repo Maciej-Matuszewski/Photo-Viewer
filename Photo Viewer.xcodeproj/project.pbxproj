@@ -20,6 +20,7 @@
 		4934A1B72060677A008416D7 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4934A1B62060677A008416D7 /* OnboardingViewModel.swift */; };
 		4977A2032061A9F1007DFE3D /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2022061A9F1007DFE3D /* EmptyStateView.swift */; };
 		4977A2052061B160007DFE3D /* LoginStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2042061B160007DFE3D /* LoginStateView.swift */; };
+		4977A2082061C9A3007DFE3D /* PinterestSearchPinsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2072061C9A3007DFE3D /* PinterestSearchPinsRequest.swift */; };
 		498603EA2059A39700F48BA7 /* PhotosProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603E92059A39700F48BA7 /* PhotosProvider.swift */; };
 		498603ED2059AC7400F48BA7 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603EB2059AC7400F48BA7 /* APIClient.swift */; };
 		498603EE2059AC7400F48BA7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603EC2059AC7400F48BA7 /* APIRequest.swift */; };
@@ -65,6 +66,7 @@
 		4934A1B62060677A008416D7 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		4977A2022061A9F1007DFE3D /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		4977A2042061B160007DFE3D /* LoginStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginStateView.swift; sourceTree = "<group>"; };
+		4977A2072061C9A3007DFE3D /* PinterestSearchPinsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestSearchPinsRequest.swift; sourceTree = "<group>"; };
 		498603E92059A39700F48BA7 /* PhotosProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosProvider.swift; sourceTree = "<group>"; };
 		498603EB2059AC7400F48BA7 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		498603EC2059AC7400F48BA7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 			children = (
 				498603F12059AD0100F48BA7 /* PinterestProvider.swift */,
 				498603F42059D62600F48BA7 /* PinterestResponseModel.swift */,
+				4977A2072061C9A3007DFE3D /* PinterestSearchPinsRequest.swift */,
 				498603F52059D62700F48BA7 /* PinterestPinsRequest.swift */,
 			);
 			path = Pinterest;
@@ -541,6 +544,7 @@
 			files = (
 				498EA2252058475A00319F60 /* AppDelegate.swift in Sources */,
 				4934A1B72060677A008416D7 /* OnboardingViewModel.swift in Sources */,
+				4977A2082061C9A3007DFE3D /* PinterestSearchPinsRequest.swift in Sources */,
 				4977A2032061A9F1007DFE3D /* EmptyStateView.swift in Sources */,
 				498603EA2059A39700F48BA7 /* PhotosProvider.swift in Sources */,
 				492D1E7420585DF000E22DB8 /* UIFont+AppFonts.swift in Sources */,
