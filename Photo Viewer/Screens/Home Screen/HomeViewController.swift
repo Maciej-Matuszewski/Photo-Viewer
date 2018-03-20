@@ -20,6 +20,14 @@ class HomeViewController: BaseViewController {
         return tableView
     }()
 
+    fileprivate lazy var loadingIndicatorView: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+        indicatorView.color = .main
+        indicatorView.hidesWhenStopped = true
+        indicatorView.startAnimating()
+        return indicatorView
+    }()
+
     fileprivate var emptyStateView: UIView {
         let viewSize = CGSize(
             width: view.frame.width,
@@ -76,7 +84,7 @@ class HomeViewController: BaseViewController {
             .merge()
             .flatMap { [unowned self] _ in return self.viewModel.currentPhotosProvider.asObservable() }
             .filter { $0.isAuthorized }
-            .flatMap {$0.getPhotos(page: nil, searchPhrase: nil)}
+            .flatMap {$0.getPhotos(searchPhrase: nil)}
             .bind(to: viewModel.photos)
             .disposed(by: disposeBag)
 
@@ -85,6 +93,7 @@ class HomeViewController: BaseViewController {
             .do(onNext: { [weak self] photos in
                 self?.refreshControl.endRefreshing()
                 self?.tableView.tableHeaderView = photos.isEmpty ? self?.emptyStateView : nil
+                self?.tableView.tableFooterView = self?.viewModel.currentPhotosProvider.value.hasMore ?? false ? self?.loadingIndicatorView : UIView()
             })
             .bind(to: tableView.rx.items(cellIdentifier: "cellIdentifier")) { index, model, cell in
                 guard let cell = cell as? HomeTableViewCell else { return }
@@ -96,6 +105,22 @@ class HomeViewController: BaseViewController {
                     })
                 }
             }
+            .disposed(by: disposeBag)
+
+        tableView.rx.willDisplayCell
+            .map { $0.indexPath }
+            .distinctUntilChanged()
+            .filter { [unowned self] indexPath -> Bool in
+                return indexPath.row == self.viewModel.photos.value.count - 1 && self.viewModel.currentPhotosProvider.value.hasMore
+            }
+            .flatMap { [unowned self] _ -> Observable<[PhotoModel]> in self.viewModel.currentPhotosProvider.value.getNextPage() }
+            .map { [unowned self] models -> [PhotoModel] in
+                var currentPhotos = self.viewModel.photos.value
+                currentPhotos.append(contentsOf: models)
+                print(currentPhotos.count)
+                return currentPhotos
+            }
+            .bind(to: viewModel.photos)
             .disposed(by: disposeBag)
 
         viewModel.currentPhotosProvider.asObservable()

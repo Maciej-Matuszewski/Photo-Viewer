@@ -45,9 +45,15 @@ class PinterestProvider {
     fileprivate lazy var apiClient: APIClient = {
         return APIClient(baseURL: baseURL)
     }()
+
+    fileprivate var cursor: String?
 }
 
 extension PinterestProvider: PhotosProvider {
+
+    var hasMore: Bool {
+        return cursor != nil
+    }
 
     var serviceName: String {
         return "Pinterest"
@@ -87,15 +93,27 @@ extension PinterestProvider: PhotosProvider {
         parentController.present(safariViewController, animated: true, completion: nil)
     }
 
-    func getPhotos(page: Int?, searchPhrase: String?) -> Observable<[PhotoModel]> {
+    func getPhotos(searchPhrase: String? = nil, cursor: String? = nil) -> Observable<[PhotoModel]> {
         guard let accessToken = accessToken else { return Observable.just([]) }
-        let response: Observable<PinterestResponseModel> = apiClient.send(apiRequest: PinterestPinsRequest(accessToken: accessToken))
+        let response: Observable<PinterestResponseModel> = apiClient.send(apiRequest: PinterestPinsRequest(accessToken: accessToken, cursor: cursor))
         return response
+            .do(onNext: { [weak self] response in
+                self?.cursor = response.page.cursor
+            })
             .map { $0.data }
             .map { pins -> [PhotoModel] in
                 pins.map { pin -> PhotoModel in
                     return PhotoModel(title: pin.note ?? "", imageURL: pin.image?.original?.url ?? "")
                 }
             }
+    }
+
+    func getPhotos(searchPhrase: String?) -> Observable<[PhotoModel]> {
+        return getPhotos(searchPhrase: searchPhrase, cursor: nil)
+    }
+
+    func getNextPage() -> Observable<[PhotoModel]> {
+        guard let cursor = cursor else { return Observable.just([]) }
+        return getPhotos(cursor: cursor)
     }
 }
