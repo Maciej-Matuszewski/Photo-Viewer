@@ -14,6 +14,12 @@ class OnboardingViewController: BaseViewController {
         return stackView
     }()
 
+    let typingView: MessageView = {
+        let messageView = MessageView(text: "•••")
+        messageView.translatesAutoresizingMaskIntoConstraints = false
+        return messageView
+    }()
+
     let button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +46,7 @@ class OnboardingViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if viewModel.provider.isAuthorized {
-            viewModel.state.accept(.wait)
+            viewModel.state.accept(.waitForResponse)
         }
     }
 
@@ -72,6 +78,11 @@ class OnboardingViewController: BaseViewController {
             stackView.bottomAnchor.constraint(lessThanOrEqualTo: scrollView.bottomAnchor),
         ])
 
+        scrollView.addSubview(typingView)
+        NSLayoutConstraint.activate([
+            typingView.topAnchor.constraint(equalTo: stackView.bottomAnchor),
+            typingView.leftAnchor.constraint(equalTo: scrollView.leftAnchor),
+        ])
     }
 
     internal override func configureReactiveBinding() {
@@ -79,15 +90,28 @@ class OnboardingViewController: BaseViewController {
             .filter { $0 != nil }
             .map { MessageView(text: $0?.text ?? "", outgoing: $0?.outgoing ?? false) }
             .subscribe(onNext: { [weak self] messageView in
-                UIView.animate(withDuration: 0.3, animations: { [weak self] in
-                    self?.stackView.addArrangedSubview(messageView)
-                }, completion: { [weak self] _ in
-                    guard let scrollView = self?.scrollView,
-                        scrollView.contentSize.height > scrollView.bounds.size.height
-                    else { return }
-                    let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height)
-                    scrollView.setContentOffset(bottomOffset, animated: true)
-                })
+                messageView.alpha = 0
+                UIView.animate(
+                    withDuration: 0.4,
+                    animations: { [weak self] in self?.typingView.alpha = 0.0 },
+                    completion: { [weak self] _ in
+                        self?.stackView.addArrangedSubview(messageView)
+                        UIView.animate(
+                            withDuration: 0.4,
+                            animations: { messageView.alpha = 1.0 },
+                            completion: { [weak self] _ in
+                                UIView.animate(
+                                    withDuration: 0.4,
+                                    animations: { [weak self] in self?.typingView.alpha = 1.0 }
+                                )
+                                guard let scrollView = self?.scrollView,
+                                    scrollView.contentSize.height > scrollView.bounds.size.height else { return }
+                                let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height)
+                                scrollView.setContentOffset(bottomOffset, animated: true)
+                            }
+                        )
+                    }
+                )
             })
             .disposed(by: disposeBag)
 
@@ -95,14 +119,21 @@ class OnboardingViewController: BaseViewController {
             .subscribe(onNext: { [weak self] state in
                 switch state {
                 case .wait:
+                    self?.typingView.isHidden = false
+                    self?.button.isHidden = true
+                    return
+                case .waitForResponse:
+                    self?.typingView.isHidden = true
                     self?.button.isHidden = true
                     return
                 case .login:
+                    self?.typingView.isHidden = true
                     guard let button = self?.button else { return }
                     button.setTitle("Log in".localized, for: .normal)
                     self?.button.isHidden = false
                     return
                 case .continue:
+                    self?.typingView.isHidden = true
                     guard let button = self?.button else { return }
                     button.setTitle("Continue".localized, for: .normal)
                     self?.button.isHidden = false
@@ -119,7 +150,7 @@ class OnboardingViewController: BaseViewController {
                 case .login:
                     strongSelf.viewModel.provider.authorize(parentController: strongSelf)
                     return
-                case .wait:
+                case .wait, .waitForResponse:
                     return
                 case .continue:
                     FlowController.shared.loadHomeController()

@@ -13,6 +13,7 @@ class OnboardingViewModel {
         case wait
         case login
         case `continue`
+        case waitForResponse
     }
 
     struct MessageStruct {
@@ -39,11 +40,11 @@ class OnboardingViewModel {
             .disposed(by: disposeBag)
 
         [
-            MessageStruct(delay: 0.3, text: "Hello 👋".localized, state: .wait, outgoing: false),
-            MessageStruct(delay: 0.6, text: "Welcome in Photo Viewer".localized, state: .wait, outgoing: false),
-            MessageStruct(delay: 1.3, text: "Here you can keep photos\nfrom different services".localized, state: .wait, outgoing: false),
-            MessageStruct(delay: 1.3, text: "Before we can continue you\nneed to authorize yourself.".localized, state: .wait, outgoing: false),
-            MessageStruct(delay: 0.4, text: "Let's start with \(provider.serviceName)".localized, state: .login, outgoing: false),
+            MessageStruct(delay: 2.0, text: "Hello 👋".localized, state: .wait, outgoing: false),
+            MessageStruct(delay: 2.2, text: "Welcome in Photo Viewer".localized, state: .wait, outgoing: false),
+            MessageStruct(delay: 3.0, text: "Here you can keep photos\nfrom different services".localized, state: .wait, outgoing: false),
+            MessageStruct(delay: 3.3, text: "Before we can continue you\nneed to authorize yourself.".localized, state: .wait, outgoing: false),
+            MessageStruct(delay: 1.4, text: "Let's start with \(provider.serviceName)".localized, state: .login, outgoing: false),
         ].forEach { message in
             publishSubject.onNext(message)
         }
@@ -56,8 +57,8 @@ class OnboardingViewModel {
             .map { [weak self] _ -> [MessageStruct] in
                 return [
                     MessageStruct(delay: 0.0, text: "I'm logged in".localized, state: .wait, outgoing: true),
-                    MessageStruct(delay: 0.3, text: "Great 👍".localized, state: .wait, outgoing: false),
-                    MessageStruct(delay: 0.6, text: "Now you can see photos,\nthat you saved in \(self?.provider.serviceName ?? "")".localized, state: .continue, outgoing: false),
+                    MessageStruct(delay: 1.6, text: "Great 👍".localized, state: .wait, outgoing: false),
+                    MessageStruct(delay: 2.2, text: "Now you can see photos,\nthat you saved in \(self?.provider.serviceName ?? "")".localized, state: .continue, outgoing: false),
                 ]
             }
             .subscribe(onNext: { messageModels in
