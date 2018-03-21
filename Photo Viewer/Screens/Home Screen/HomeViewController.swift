@@ -85,6 +85,10 @@ class HomeViewController: BaseViewController {
     }
 
     override func configureReactiveBinding() {
+        viewModel.currentPhotosProvider.asObservable()
+            .map { $0.serviceName }
+            .bind(to: navigationItem.rx.title)
+            .disposed(by: disposeBag)
 
         let refreshObserver = refreshControl.rx.controlEvent(.valueChanged).asObservable().map { return () }
         let providerObserver = viewModel.currentPhotosProvider.asObservable().map { _ in return () }
@@ -92,12 +96,68 @@ class HomeViewController: BaseViewController {
         //TO-DO: Change Notification.name
         let authorizationObserver = NotificationCenter.default.rx.notification(Notification.Name(rawValue: "AuthorizationStateHasBeenChangedNotification")).asObservable().map { _ in return () }
 
-        Observable.of(refreshObserver, providerObserver, authorizationObserver, emptySearchObserver)
+        let getPhotosObservable = Observable.of(refreshObserver, providerObserver, authorizationObserver, emptySearchObserver)
             .merge()
             .throttle(2, latest: true, scheduler: MainScheduler.instance)
             .flatMap { [unowned self] _ in return self.viewModel.currentPhotosProvider.asObservable() }
             .filter { $0.isAuthorized }
             .flatMap {$0.getPhotos(searchPhrase: nil)}
+
+        let getNextPageObservable = tableView.rx.willDisplayCell
+            .map { $0.indexPath }
+            .filter { [unowned self] indexPath -> Bool in
+                return indexPath.row == self.viewModel.photos.value.count - 1 && self.viewModel.currentPhotosProvider.value.hasMore
+            }
+            .flatMap { [unowned self] _ -> Observable<[PhotoModel]> in self.viewModel.currentPhotosProvider.value.getNextPage() }
+            .map { [unowned self] models -> [PhotoModel] in
+                var currentPhotos = self.viewModel.photos.value
+                currentPhotos.append(contentsOf: models)
+                return currentPhotos
+            }
+
+        let getSearchedPhotosObservable = searchController.searchBar.rx.text.asObservable()
+            .map { ($0 ?? "").lowercased() }
+            .throttle(1.5, latest: true, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .filter { !$0.isEmpty }
+            .flatMap { [unowned self] searchPhrase in
+                return self.viewModel.currentPhotosProvider.value.getPhotos(searchPhrase: searchPhrase)
+            }
+
+        Observable.of(getPhotosObservable, getNextPageObservable, getSearchedPhotosObservable)
+            .merge()
+            .observeOn(MainScheduler.instance)
+            .do(onError: { [weak self] error in
+                guard let error = error as? APIError else { return }
+                let alertController: UIAlertController
+                switch error {
+                case .MissingData, .ErrorModelDecodeError:
+                    alertController = UIAlertController(
+                        okActionHandler: nil,
+                        title: "Error :(".localized,
+                        message: "Something went wrong. Please try again".localized
+                    )
+                    break
+                case .ResponseError(let errorModel):
+                    guard let errorHandler = self?.viewModel.currentPhotosProvider.value.errorHandler else { return }
+                    let handling = errorHandler.handleError(code: errorModel.statusCode)
+                    alertController = UIAlertController(
+                        okActionHandler: { _ in
+                            handling.callback?()
+                    },
+                        title: "Error :(".localized,
+                        message: handling.message
+                    )
+                    break
+                }
+
+                if self?.searchController.isActive ?? false {
+                    self?.searchController.present(alertController, animated: true, completion: nil)
+                } else {
+                    self?.present(alertController, animated: true, completion: nil)
+                }
+            })
+            .catchErrorJustReturn([])
             .bind(to: viewModel.photos)
             .disposed(by: disposeBag)
 
@@ -120,25 +180,6 @@ class HomeViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
-        tableView.rx.willDisplayCell
-            .map { $0.indexPath }
-            .filter { [unowned self] indexPath -> Bool in
-                return indexPath.row == self.viewModel.photos.value.count - 1 && self.viewModel.currentPhotosProvider.value.hasMore
-            }
-            .flatMap { [unowned self] _ -> Observable<[PhotoModel]> in self.viewModel.currentPhotosProvider.value.getNextPage() }
-            .map { [unowned self] models -> [PhotoModel] in
-                var currentPhotos = self.viewModel.photos.value
-                currentPhotos.append(contentsOf: models)
-                return currentPhotos
-            }
-            .bind(to: viewModel.photos)
-            .disposed(by: disposeBag)
-
-        viewModel.currentPhotosProvider.asObservable()
-            .map { $0.serviceName }
-            .bind(to: navigationItem.rx.title)
-            .disposed(by: disposeBag)
-
         tableView.rx.modelSelected(PhotoModel.self)
             .asObservable()
             .map { PhotoPreviewViewController(photoModel: $0) }
@@ -149,17 +190,6 @@ class HomeViewController: BaseViewController {
                     self?.present(controller, animated: true, completion: nil)
                 }
             })
-            .disposed(by: disposeBag)
-
-        searchController.searchBar.rx.text.asObservable()
-            .map { ($0 ?? "").lowercased() }
-            .throttle(1.5, latest: true, scheduler: MainScheduler.instance)
-            .distinctUntilChanged()
-            .filter { !$0.isEmpty }
-            .flatMap { [unowned self] searchPhrase in
-                return self.viewModel.currentPhotosProvider.value.getPhotos(searchPhrase: searchPhrase)
-            }
-            .bind(to: viewModel.photos)
             .disposed(by: disposeBag)
 
         Observable

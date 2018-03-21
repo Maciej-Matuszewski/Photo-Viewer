@@ -21,6 +21,11 @@
 		4977A2032061A9F1007DFE3D /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2022061A9F1007DFE3D /* EmptyStateView.swift */; };
 		4977A2052061B160007DFE3D /* LoginStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2042061B160007DFE3D /* LoginStateView.swift */; };
 		4977A2082061C9A3007DFE3D /* PinterestSearchPinsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2072061C9A3007DFE3D /* PinterestSearchPinsRequest.swift */; };
+		4977A20A2062EE29007DFE3D /* PinterestErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2092062EE29007DFE3D /* PinterestErrorModel.swift */; };
+		4977A20C2062F76B007DFE3D /* ErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A20B2062F76B007DFE3D /* ErrorModel.swift */; };
+		4977A20E2062FA60007DFE3D /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A20D2062FA60007DFE3D /* ErrorHandler.swift */; };
+		4977A2122062FB68007DFE3D /* PinterestErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2112062FB68007DFE3D /* PinterestErrorHandler.swift */; };
+		4977A216206301F1007DFE3D /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A215206301F1007DFE3D /* UIAlertController+Extensions.swift */; };
 		498603EA2059A39700F48BA7 /* PhotosProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603E92059A39700F48BA7 /* PhotosProvider.swift */; };
 		498603ED2059AC7400F48BA7 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603EB2059AC7400F48BA7 /* APIClient.swift */; };
 		498603EE2059AC7400F48BA7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603EC2059AC7400F48BA7 /* APIRequest.swift */; };
@@ -67,6 +72,11 @@
 		4977A2022061A9F1007DFE3D /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		4977A2042061B160007DFE3D /* LoginStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginStateView.swift; sourceTree = "<group>"; };
 		4977A2072061C9A3007DFE3D /* PinterestSearchPinsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestSearchPinsRequest.swift; sourceTree = "<group>"; };
+		4977A2092062EE29007DFE3D /* PinterestErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestErrorModel.swift; sourceTree = "<group>"; };
+		4977A20B2062F76B007DFE3D /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		4977A20D2062FA60007DFE3D /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		4977A2112062FB68007DFE3D /* PinterestErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestErrorHandler.swift; sourceTree = "<group>"; };
+		4977A215206301F1007DFE3D /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
 		498603E92059A39700F48BA7 /* PhotosProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosProvider.swift; sourceTree = "<group>"; };
 		498603EB2059AC7400F48BA7 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		498603EC2059AC7400F48BA7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -148,6 +158,7 @@
 				492D1E6F20585DF000E22DB8 /* UIImage+Brightness.swift */,
 				492D1E7020585DF000E22DB8 /* UIFont+AppFonts.swift */,
 				492D1E7120585DF000E22DB8 /* UIColor+AppColors.swift */,
+				4977A215206301F1007DFE3D /* UIAlertController+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -174,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				498603E92059A39700F48BA7 /* PhotosProvider.swift */,
+				4977A20D2062FA60007DFE3D /* ErrorHandler.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -213,11 +225,30 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		4977A20F2062FB4A007DFE3D /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				4977A2072061C9A3007DFE3D /* PinterestSearchPinsRequest.swift */,
+				498603F52059D62700F48BA7 /* PinterestPinsRequest.swift */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		4977A2102062FB53007DFE3D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				498603F42059D62600F48BA7 /* PinterestResponseModel.swift */,
+				4977A2092062EE29007DFE3D /* PinterestErrorModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		498603F02059ACCD00F48BA7 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				498603EB2059AC7400F48BA7 /* APIClient.swift */,
 				498603EC2059AC7400F48BA7 /* APIRequest.swift */,
+				4977A20B2062F76B007DFE3D /* ErrorModel.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -226,9 +257,9 @@
 			isa = PBXGroup;
 			children = (
 				498603F12059AD0100F48BA7 /* PinterestProvider.swift */,
-				498603F42059D62600F48BA7 /* PinterestResponseModel.swift */,
-				4977A2072061C9A3007DFE3D /* PinterestSearchPinsRequest.swift */,
-				498603F52059D62700F48BA7 /* PinterestPinsRequest.swift */,
+				4977A2112062FB68007DFE3D /* PinterestErrorHandler.swift */,
+				4977A2102062FB53007DFE3D /* Models */,
+				4977A20F2062FB4A007DFE3D /* Requests */,
 			);
 			path = Pinterest;
 			sourceTree = "<group>";
@@ -543,14 +574,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				498EA2252058475A00319F60 /* AppDelegate.swift in Sources */,
+				4977A20E2062FA60007DFE3D /* ErrorHandler.swift in Sources */,
 				4934A1B72060677A008416D7 /* OnboardingViewModel.swift in Sources */,
 				4977A2082061C9A3007DFE3D /* PinterestSearchPinsRequest.swift in Sources */,
 				4977A2032061A9F1007DFE3D /* EmptyStateView.swift in Sources */,
 				498603EA2059A39700F48BA7 /* PhotosProvider.swift in Sources */,
 				492D1E7420585DF000E22DB8 /* UIFont+AppFonts.swift in Sources */,
+				4977A20C2062F76B007DFE3D /* ErrorModel.swift in Sources */,
 				4934A1B520605CEC008416D7 /* MessaageView.swift in Sources */,
 				498603F62059D62700F48BA7 /* PinterestResponseModel.swift in Sources */,
 				4934A1B320605B64008416D7 /* OnboardingViewController.swift in Sources */,
+				4977A20A2062EE29007DFE3D /* PinterestErrorModel.swift in Sources */,
 				498603F72059D62700F48BA7 /* PinterestPinsRequest.swift in Sources */,
 				492D1E7320585DF000E22DB8 /* UIImage+Brightness.swift in Sources */,
 				499797AA2058760D00BB259F /* HomeViewModel.swift in Sources */,
@@ -560,12 +594,14 @@
 				498603EE2059AC7400F48BA7 /* APIRequest.swift in Sources */,
 				492D1E882058740900E22DB8 /* HomeTableViewCell.swift in Sources */,
 				49F47101205AAFC3004FBF62 /* PhotoPreviewViewController.swift in Sources */,
+				4977A2122062FB68007DFE3D /* PinterestErrorHandler.swift in Sources */,
 				498603ED2059AC7400F48BA7 /* APIClient.swift in Sources */,
 				499797AC2058770100BB259F /* PhotoModel.swift in Sources */,
 				492D1E7520585DF000E22DB8 /* UIColor+AppColors.swift in Sources */,
 				4977A2052061B160007DFE3D /* LoginStateView.swift in Sources */,
 				492D1E6C20585BA400E22DB8 /* BaseViewController.swift in Sources */,
 				498603F22059AD0100F48BA7 /* PinterestProvider.swift in Sources */,
+				4977A216206301F1007DFE3D /* UIAlertController+Extensions.swift in Sources */,
 				49FFD317205B0E1500319E53 /* FlowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

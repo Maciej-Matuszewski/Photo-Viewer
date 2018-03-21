@@ -48,9 +48,13 @@ class PinterestProvider {
 
     fileprivate var cursor: String?
     fileprivate var searchPhrase: String?
+    fileprivate let _errorHandler = PinterestErrorHandler()
 }
 
 extension PinterestProvider: PhotosProvider {
+    var errorHandler: ErrorHandler {
+        return _errorHandler
+    }
 
     var hasMore: Bool {
         return cursor != nil
@@ -104,7 +108,7 @@ extension PinterestProvider: PhotosProvider {
             request = PinterestPinsRequest(accessToken: accessToken, cursor: cursor)
         }
 
-        let response: Observable<PinterestResponseModel> = apiClient.send(apiRequest: request)
+        let response: Observable<PinterestResponseModel> = apiClient.send(apiRequest: request, ErrorModelType: PinterestErrorModel.self)
         return response
             .do(onNext: { [weak self] response in
                 self?.cursor = response.page.cursor

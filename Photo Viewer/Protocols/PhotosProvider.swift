@@ -13,6 +13,8 @@ protocol PhotosProvider {
 
     var hasMore: Bool { get }
 
+    var errorHandler: ErrorHandler { get }
+
     func authorize(parentController: UIViewController)
 
     func getPhotos(searchPhrase: String?) -> Observable<[PhotoModel]>
