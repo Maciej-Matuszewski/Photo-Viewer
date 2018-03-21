@@ -26,6 +26,10 @@
 		4977A20E2062FA60007DFE3D /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A20D2062FA60007DFE3D /* ErrorHandler.swift */; };
 		4977A2122062FB68007DFE3D /* PinterestErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2112062FB68007DFE3D /* PinterestErrorHandler.swift */; };
 		4977A216206301F1007DFE3D /* UIAlertController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A215206301F1007DFE3D /* UIAlertController+Extensions.swift */; };
+		4977A21820630BB4007DFE3D /* PintrestRequestsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A21720630BB4007DFE3D /* PintrestRequestsTests.swift */; };
+		4977A21A2063106B007DFE3D /* FakePhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2192063106B007DFE3D /* FakePhotoProvider.swift */; };
+		4977A21C20631245007DFE3D /* HomeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A21B20631245007DFE3D /* HomeViewControllerTests.swift */; };
+		4977A21E20631808007DFE3D /* PinterestErrorHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A21D20631808007DFE3D /* PinterestErrorHandlerTests.swift */; };
 		498603EA2059A39700F48BA7 /* PhotosProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603E92059A39700F48BA7 /* PhotosProvider.swift */; };
 		498603ED2059AC7400F48BA7 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603EB2059AC7400F48BA7 /* APIClient.swift */; };
 		498603EE2059AC7400F48BA7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603EC2059AC7400F48BA7 /* APIRequest.swift */; };
@@ -35,7 +39,6 @@
 		498EA2252058475A00319F60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EA2242058475A00319F60 /* AppDelegate.swift */; };
 		498EA22C2058475A00319F60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 498EA22B2058475A00319F60 /* Assets.xcassets */; };
 		498EA22F2058475A00319F60 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 498EA22D2058475A00319F60 /* LaunchScreen.storyboard */; };
-		498EA23A2058475A00319F60 /* Photo_ViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498EA2392058475A00319F60 /* Photo_ViewerTests.swift */; };
 		499797AA2058760D00BB259F /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499797A92058760D00BB259F /* HomeViewModel.swift */; };
 		499797AC2058770100BB259F /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499797AB205876AD00BB259F /* PhotoModel.swift */; };
 		49F47101205AAFC3004FBF62 /* PhotoPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49F47100205AAFC3004FBF62 /* PhotoPreviewViewController.swift */; };
@@ -77,6 +80,10 @@
 		4977A20D2062FA60007DFE3D /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		4977A2112062FB68007DFE3D /* PinterestErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestErrorHandler.swift; sourceTree = "<group>"; };
 		4977A215206301F1007DFE3D /* UIAlertController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Extensions.swift"; sourceTree = "<group>"; };
+		4977A21720630BB4007DFE3D /* PintrestRequestsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PintrestRequestsTests.swift; sourceTree = "<group>"; };
+		4977A2192063106B007DFE3D /* FakePhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePhotoProvider.swift; sourceTree = "<group>"; };
+		4977A21B20631245007DFE3D /* HomeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerTests.swift; sourceTree = "<group>"; };
+		4977A21D20631808007DFE3D /* PinterestErrorHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestErrorHandlerTests.swift; sourceTree = "<group>"; };
 		498603E92059A39700F48BA7 /* PhotosProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosProvider.swift; sourceTree = "<group>"; };
 		498603EB2059AC7400F48BA7 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		498603EC2059AC7400F48BA7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -89,7 +96,6 @@
 		498EA22E2058475A00319F60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		498EA2302058475A00319F60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		498EA2352058475A00319F60 /* Photo ViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Photo ViewerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		498EA2392058475A00319F60 /* Photo_ViewerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo_ViewerTests.swift; sourceTree = "<group>"; };
 		498EA23B2058475A00319F60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		499797A92058760D00BB259F /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		499797AB205876AD00BB259F /* PhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
@@ -221,6 +227,7 @@
 			children = (
 				4977A2022061A9F1007DFE3D /* EmptyStateView.swift */,
 				4977A2042061B160007DFE3D /* LoginStateView.swift */,
+				4934A1B420605CEC008416D7 /* MessaageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -304,8 +311,11 @@
 		498EA2382058475A00319F60 /* Photo ViewerTests */ = {
 			isa = PBXGroup;
 			children = (
-				498EA2392058475A00319F60 /* Photo_ViewerTests.swift */,
 				498EA23B2058475A00319F60 /* Info.plist */,
+				4977A21720630BB4007DFE3D /* PintrestRequestsTests.swift */,
+				4977A21D20631808007DFE3D /* PinterestErrorHandlerTests.swift */,
+				4977A21B20631245007DFE3D /* HomeViewControllerTests.swift */,
+				4977A2192063106B007DFE3D /* FakePhotoProvider.swift */,
 			);
 			path = "Photo ViewerTests";
 			sourceTree = "<group>";
@@ -315,7 +325,6 @@
 			children = (
 				4934A1B220605B1A008416D7 /* OnboardingViewController.swift */,
 				4934A1B62060677A008416D7 /* OnboardingViewModel.swift */,
-				4934A1B420605CEC008416D7 /* MessaageView.swift */,
 			);
 			path = "Onboarding Screen";
 			sourceTree = "<group>";
@@ -610,7 +619,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				498EA23A2058475A00319F60 /* Photo_ViewerTests.swift in Sources */,
+				4977A21E20631808007DFE3D /* PinterestErrorHandlerTests.swift in Sources */,
+				4977A21820630BB4007DFE3D /* PintrestRequestsTests.swift in Sources */,
+				4977A21A2063106B007DFE3D /* FakePhotoProvider.swift in Sources */,
+				4977A21C20631245007DFE3D /* HomeViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
