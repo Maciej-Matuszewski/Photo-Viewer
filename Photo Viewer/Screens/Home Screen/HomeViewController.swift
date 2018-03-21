@@ -30,7 +30,7 @@ class HomeViewController: BaseViewController {
         return tableView
     }()
 
-    fileprivate lazy var loadingIndicatorView: UIActivityIndicatorView = {
+    private lazy var loadingIndicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
         indicatorView.color = .main
         indicatorView.hidesWhenStopped = true
@@ -38,7 +38,7 @@ class HomeViewController: BaseViewController {
         return indicatorView
     }()
 
-    fileprivate var emptyStateView: UIView {
+    private var emptyStateView: UIView {
         let viewSize = CGSize(
             width: view.frame.width,
             height: 300
