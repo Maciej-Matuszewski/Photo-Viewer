@@ -117,7 +117,7 @@ class HomeViewController: BaseViewController {
             }
 
         let getSearchedPhotosObservable = searchController.searchBar.rx.text.asObservable()
-            .map { ($0 ?? "").lowercased() }
+            .map { ($0 ?? "").lowercased().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) }
             .throttle(1.5, latest: true, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .filter { !$0.isEmpty }
