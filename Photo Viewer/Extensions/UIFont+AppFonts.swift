@@ -6,10 +6,10 @@ extension UIFont {
     static let body = UIFont.preferredFont(forTextStyle: .body)
 
     /// Font with size of normal font, but bolded
-    static let title = UIFont.preferredFont(forTextStyle: .title1)
+    static let title = UIFont.boldSystemFont(ofSize: 20)
 
     /// Font bigger than normal
-    static let button = UIFont.preferredFont(forTextStyle: UIFontTextStyle.callout)
+    static let button = UIFont.boldSystemFont(ofSize: 22)
 
     /// Font with size of big font, but bolded
     static let header = UIFont.preferredFont(forTextStyle: .headline)

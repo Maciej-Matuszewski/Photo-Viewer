@@ -1,24 +1,22 @@
 PODS:
-  - KVNProgress (2.3.1)
+  - KeychainAccess (3.1.0)
+  - Kingfisher (4.6.3)
   - RxCocoa (4.1.2):
     - RxSwift (~> 4.0)
   - RxSwift (4.1.2)
-  - SDWebImage (4.3.3):
-    - SDWebImage/Core (= 4.3.3)
-  - SDWebImage/Core (4.3.3)
 
 DEPENDENCIES:
-  - KVNProgress (~> 2.3.1)
+  - KeychainAccess (~> 3.1.0)
+  - Kingfisher (~> 4.6.3)
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
-  - SDWebImage (~> 4.3.3)
 
 SPEC CHECKSUMS:
-  KVNProgress: 8167b1f19e2758290c0b6143020ed9dcbb0477a1
+  KeychainAccess: 94c5540b32eabf7bc32bfb976a268e8ea05fd6da
+  Kingfisher: 98e6d5b5e807645743e8ed5ececd25d688d38452
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxSwift: e49536837d9901277638493ea537394d4b55f570
-  SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
 
-PODFILE CHECKSUM: 53b8f9544de8c35eabc033c7cf9c6f3228eb28a5
+PODFILE CHECKSUM: a0753ebea2b7b58e3ea06184644abd8dbe9bc6f5
 
 COCOAPODS: 1.4.0
