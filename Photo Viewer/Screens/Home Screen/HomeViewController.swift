@@ -7,6 +7,7 @@ class HomeViewController: BaseViewController {
 
     private let viewModel: HomeViewModel
     private let disposeBag = DisposeBag()
+    fileprivate let transition = PhotoPreviewViewControllerTransition()
 
     private let refreshControl = UIRefreshControl()
 
@@ -182,7 +183,11 @@ class HomeViewController: BaseViewController {
 
         tableView.rx.modelSelected(PhotoModel.self)
             .asObservable()
-            .map { PhotoPreviewViewController(photoModel: $0) }
+            .map { photoModel -> PhotoPreviewViewController in
+                let photoPreviewViewController = PhotoPreviewViewController(photoModel: photoModel)
+                photoPreviewViewController.transitioningDelegate = self
+                return photoPreviewViewController
+            }
             .subscribe(onNext: { [weak self] controller in
                 if self?.searchController.isActive ?? false {
                     self?.searchController.present(controller, animated: true, completion: nil)
@@ -209,5 +214,20 @@ class HomeViewController: BaseViewController {
                 self?.tableView.contentInset.bottom = keyboardHeight != 0 ? keyboardHeight : self?.view.safeAreaInsets.bottom ?? 0
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension HomeViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        guard let indexPath = tableView.indexPathForSelectedRow,
+            let cell = self.tableView.cellForRow(at: indexPath) as? HomeTableViewCell else { return transition }
+        transition.originFrame = cell.backgroundImageView.superview!.convert(cell.backgroundImageView.frame, to: nil)
+        transition.presenting = true
+        return transition
+    }
+
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = false
+        return transition
     }
 }
