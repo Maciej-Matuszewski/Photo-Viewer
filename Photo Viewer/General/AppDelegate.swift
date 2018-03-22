@@ -21,9 +21,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return result
     }
 
-    func logout(){ //TO-DO: Remove this later!
+    //TO-DO: This method should be removed,
+    //however it can be helpful during project review.
+    func logout(){
         let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "")
         keychain["PinterestProviderToken"] = nil
+        UserDefaults.standard.removeObject(forKey: "GiphyAuthStatus")
+        UserDefaults.standard.synchronize()
     }
 }
 
