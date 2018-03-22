@@ -30,6 +30,7 @@
 		4977A21A2063106B007DFE3D /* FakePhotoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A2192063106B007DFE3D /* FakePhotoProvider.swift */; };
 		4977A21C20631245007DFE3D /* HomeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A21B20631245007DFE3D /* HomeViewControllerTests.swift */; };
 		4977A21E20631808007DFE3D /* PinterestErrorHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A21D20631808007DFE3D /* PinterestErrorHandlerTests.swift */; };
+		4977A22020632243007DFE3D /* PhotoPreviewViewControllerTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4977A21F20632242007DFE3D /* PhotoPreviewViewControllerTransition.swift */; };
 		498603EA2059A39700F48BA7 /* PhotosProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603E92059A39700F48BA7 /* PhotosProvider.swift */; };
 		498603ED2059AC7400F48BA7 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603EB2059AC7400F48BA7 /* APIClient.swift */; };
 		498603EE2059AC7400F48BA7 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498603EC2059AC7400F48BA7 /* APIRequest.swift */; };
@@ -84,6 +85,7 @@
 		4977A2192063106B007DFE3D /* FakePhotoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePhotoProvider.swift; sourceTree = "<group>"; };
 		4977A21B20631245007DFE3D /* HomeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerTests.swift; sourceTree = "<group>"; };
 		4977A21D20631808007DFE3D /* PinterestErrorHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestErrorHandlerTests.swift; sourceTree = "<group>"; };
+		4977A21F20632242007DFE3D /* PhotoPreviewViewControllerTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoPreviewViewControllerTransition.swift; sourceTree = "<group>"; };
 		498603E92059A39700F48BA7 /* PhotosProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosProvider.swift; sourceTree = "<group>"; };
 		498603EB2059AC7400F48BA7 /* APIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		498603EC2059AC7400F48BA7 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
@@ -151,7 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				492D1E80205867E100E22DB8 /* Home Screen */,
-				49F47100205AAFC3004FBF62 /* PhotoPreviewViewController.swift */,
+				496FEDBC20632EEE00C56EBF /* Photo Preview Screen */,
 				49FFD31A205B193000319E53 /* Onboarding Screen */,
 			);
 			path = Screens;
@@ -220,6 +222,15 @@
 				492D1E872058740900E22DB8 /* HomeTableViewCell.swift */,
 			);
 			path = "Home Screen";
+			sourceTree = "<group>";
+		};
+		496FEDBC20632EEE00C56EBF /* Photo Preview Screen */ = {
+			isa = PBXGroup;
+			children = (
+				49F47100205AAFC3004FBF62 /* PhotoPreviewViewController.swift */,
+				4977A21F20632242007DFE3D /* PhotoPreviewViewControllerTransition.swift */,
+			);
+			path = "Photo Preview Screen";
 			sourceTree = "<group>";
 		};
 		4977A2062061B166007DFE3D /* Views */ = {
@@ -450,7 +461,6 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Photo Viewer/Pods-Photo Viewer-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/KVNProgress/KVNProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -458,7 +468,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KVNProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -556,7 +565,6 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Photo ViewerTests/Pods-Photo ViewerTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/KVNProgress/KVNProgress.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainAccess/KeychainAccess.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -564,7 +572,6 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KVNProgress.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainAccess.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -593,6 +600,7 @@
 				4934A1B520605CEC008416D7 /* MessaageView.swift in Sources */,
 				498603F62059D62700F48BA7 /* PinterestResponseModel.swift in Sources */,
 				4934A1B320605B64008416D7 /* OnboardingViewController.swift in Sources */,
+				4977A22020632243007DFE3D /* PhotoPreviewViewControllerTransition.swift in Sources */,
 				4977A20A2062EE29007DFE3D /* PinterestErrorModel.swift in Sources */,
 				498603F72059D62700F48BA7 /* PinterestPinsRequest.swift in Sources */,
 				492D1E7320585DF000E22DB8 /* UIImage+Brightness.swift in Sources */,
