@@ -49,7 +49,7 @@ class OnboardingViewModel {
             publishSubject.onNext(message)
         }
 
-        NotificationCenter.default.rx.notification(Notification.Name(rawValue: "AuthorizationStateHasBeenChangedNotification")).asObservable()
+        NotificationCenter.default.rx.notification(Notification.AuthorizationStateHasBeenChanged).asObservable()
             .map { [weak self] _ -> Bool in
                 self?.provider.isAuthorized ?? false
             }

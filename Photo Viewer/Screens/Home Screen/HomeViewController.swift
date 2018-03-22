@@ -91,13 +91,20 @@ class HomeViewController: BaseViewController {
             .bind(to: navigationItem.rx.title)
             .disposed(by: disposeBag)
 
+        viewModel.currentPhotosProvider.asObservable()
+            .filter { !$0.isAuthorized && $0.autoAuth }
+            .subscribe(onNext: { [unowned self] provider in
+                provider.authorize(parentController: self)
+            })
+            .disposed(by: disposeBag)
+
         let refreshObserver = refreshControl.rx.controlEvent(.valueChanged).asObservable().map { return () }
         let providerObserver = viewModel.currentPhotosProvider.asObservable().map { _ in return () }
         let emptySearchObserver = searchController.searchBar.rx.text.filter { $0?.isEmpty ?? false }.map { _ in return () }
-        //TO-DO: Change Notification.name
-        let authorizationObserver = NotificationCenter.default.rx.notification(Notification.Name(rawValue: "AuthorizationStateHasBeenChangedNotification")).asObservable().map { _ in return () }
+        let authorizationObserver = NotificationCenter.default.rx.notification(Notification.AuthorizationStateHasBeenChanged).asObservable().map { _ in return () }
 
         let getPhotosObservable = Observable.of(refreshObserver, providerObserver, authorizationObserver, emptySearchObserver)
+            .observeOn(MainScheduler.asyncInstance)
             .merge()
             .throttle(2, latest: true, scheduler: MainScheduler.instance)
             .flatMap { [unowned self] _ in return self.viewModel.currentPhotosProvider.asObservable() }
@@ -105,6 +112,7 @@ class HomeViewController: BaseViewController {
             .flatMap {$0.getPhotos(searchPhrase: nil)}
 
         let getNextPageObservable = tableView.rx.willDisplayCell
+            .observeOn(MainScheduler.asyncInstance)
             .map { $0.indexPath }
             .filter { [unowned self] indexPath -> Bool in
                 return indexPath.row == self.viewModel.photos.value.count - 1 && self.viewModel.currentPhotosProvider.value.hasMore
@@ -117,6 +125,7 @@ class HomeViewController: BaseViewController {
             }
 
         let getSearchedPhotosObservable = searchController.searchBar.rx.text.asObservable()
+            .observeOn(MainScheduler.asyncInstance)
             .map { ($0 ?? "").lowercased().trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) }
             .throttle(1.5, latest: true, scheduler: MainScheduler.instance)
             .distinctUntilChanged()

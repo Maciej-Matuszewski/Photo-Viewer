@@ -13,6 +13,10 @@ protocol PhotosProvider {
 
     var hasMore: Bool { get }
 
+    var autoAuth: Bool { get }
+
+    var logoImage: UIImage { get }
+
     var errorHandler: ErrorHandler { get }
 
     func authorize(parentController: UIViewController)
@@ -26,6 +30,12 @@ extension PhotosProvider {
     var emptyStateInfoText: String {
         get {
             return "Ops... There is nothing here :(".localized
+        }
+    }
+
+    var autoAuth: Bool {
+        get {
+            return false
         }
     }
 }

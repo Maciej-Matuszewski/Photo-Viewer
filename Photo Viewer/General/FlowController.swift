@@ -3,29 +3,39 @@ import UIKit
 class FlowController {
     private let window: UIWindow
     public static let shared = FlowController()
-    public let navigationController = UINavigationController()
 
     public let providers: [PhotosProvider] = {
-        return [PinterestProvider()]
+        return [PinterestProvider(), GiphyProvider()]
     }()
 
     private init() {
         window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = navigationController
-        window.makeKeyAndVisible()
     }
 
     public func loadHomeController() {
         let authenticatedProviders = providers.filter { $0.isAuthorized }
         if !authenticatedProviders.isEmpty {
-            navigationController.setNavigationBarHidden(false, animated: true)
-            navigationController.setViewControllers([HomeViewController(provider: authenticatedProviders.first!)], animated: true)
+            let tabBarController = UITabBarController()
+            tabBarController.setViewControllers(
+                providers.map { provider in
+                    let navigationController = UINavigationController(rootViewController: HomeViewController(provider: provider))
+                    navigationController.tabBarItem.title = provider.serviceName
+                    navigationController.tabBarItem.image = provider.logoImage
+                    return navigationController
+                },
+                animated: true
+            )
+            window.rootViewController = tabBarController
+            window.makeKeyAndVisible()
         } else {
             guard let firstProvider = providers.first else {
                 fatalError("App can not works without photo provider!")
             }
-            navigationController.setNavigationBarHidden(true, animated: true)
-            navigationController.setViewControllers([OnboardingViewController(provider: firstProvider)], animated: true)
+
+            let navigationController = UINavigationController(rootViewController: OnboardingViewController(provider: firstProvider))
+            navigationController.isNavigationBarHidden = true
+            window.rootViewController = navigationController
+            window.makeKeyAndVisible()
         }
     }
 }
