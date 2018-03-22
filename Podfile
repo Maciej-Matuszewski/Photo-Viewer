@@ -10,6 +10,7 @@ def common_pods
     pod 'RxCocoa',        '~> 4.0'
     pod 'Kingfisher',     '~> 4.6.3'
     pod 'KeychainAccess', '~> 3.1.0'
+    pod 'GiphyCoreSDK',   '~> 1.1.0'
 end
 
 target 'Photo Viewer' do

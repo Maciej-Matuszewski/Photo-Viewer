@@ -6,9 +6,9 @@ import KeychainAccess
 
 class PinterestProvider {
     static fileprivate var clientId: String {
-        //TO-DO: Add ClientId into Cocoapods-Keys
-        return <#T##clientId: String#>
-
+        //TO-DO: This key should be stored using `CocoaPods-Keys`,
+        //but in order not to hinder checking the project I left it unencrypted
+        return "4955736530973898008"
     }
 
     static fileprivate var redirectUri: String {
@@ -32,8 +32,7 @@ class PinterestProvider {
 
         let keychain = Keychain(service: Bundle.main.bundleIdentifier ?? "")
         keychain["PinterestProviderToken"] = accessToken
-        //TO-DO: Change Notification name
-        NotificationCenter.default.post(Notification(name: Notification.Name(rawValue: "AuthorizationStateHasBeenChangedNotification")))
+        NotificationCenter.default.post(Notification(name: Notification.AuthorizationStateHasBeenChanged))
         return true
     }
 
@@ -52,6 +51,10 @@ class PinterestProvider {
 }
 
 extension PinterestProvider: PhotosProvider {
+    var logoImage: UIImage {
+        return #imageLiteral(resourceName: "pinterest")
+    }
+
     var errorHandler: ErrorHandler {
         return _errorHandler
     }
