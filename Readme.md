@@ -1,16 +1,6 @@
 # Photo Viewer
 ## Author: [Maciej Matuszewski](mailto:maciej.matuszewski@me.com)
 
-***
-
-## Test accounts
-### Pinterest:
-> email: `maciej.matuszewski+cookpad@me.com`
-
-> password: `password123`
-
-***
-
 ## Description
 **Photo Viewer** is an application for displaying photos and animations from various services. In the version 1.0, the app supports **Pinterest** and **Giphy**. The biggest advantage of this app is possibility to easy integrate another services by using prepared protocols.
 
